@@ -12,6 +12,7 @@ require "action_mailbox/engine"
 require "action_text/engine"
 require "action_view/railtie"
 require "action_cable/engine"
+require "dotenv/rails"
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
@@ -19,6 +20,9 @@ require "action_cable/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+Dotenv::Railtie.load
+
+HOSTNAME = ENV['HOSTNAME']
 module GalleryApi
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
