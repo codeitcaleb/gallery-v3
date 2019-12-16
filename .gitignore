@@ -1,2 +1,3 @@
 # Don't track content of these folders
-gallery-api/config/master.key
+gallery-v2/gallery-api/config/master.key
+gallery-v2/gallery-api/config/credentials.yml.enc
