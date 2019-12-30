@@ -26,7 +26,7 @@ function createPhoto(configObject) {
 
   fetch("http://localhost:3000/api/photos", configObject)
     .then(response => response.json())
-    .then(fetchPhotos())
+    .then(fetchNewPhoto())
     .catch(error => (document.body.innerHTML = error.message));
 }
 
