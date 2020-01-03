@@ -8,7 +8,7 @@ class Api::PhotosController < ApplicationController
   end
   # GET /photos/1
   def show
-    render json: @photo
+    render json: PhotoSerializer.new(@photo)
   end
 
   # POST /photos
@@ -18,8 +18,6 @@ class Api::PhotosController < ApplicationController
     @photo.image.attach(params[:image])
     @photo.location = @location
     @photo.caption = params[:caption]
-    
-    # byebug
     
     if @photo.save
       render json:  PhotoSerializer.new(@photo)

@@ -1,5 +1,3 @@
-
-
 document.querySelector("#photo-form").addEventListener("submit", event => {
 
    event.preventDefault();
@@ -30,32 +28,29 @@ function createPhoto(configObject) {
     .catch(error => (document.body.innerHTML = error.message));
 }
 
-
-//Make a GET request to the API using fetch()
-// Parse the response to JSON
-// Iterate through the array of JSON Objects
-// And create instance of the Photo class with the returned data
-// Append the the pic instances to the DOM (using renderPhoto(pic))
-
-// * Update/re-fetch each time a new photo is uploaded
-
-// Clear form after pic is uploaded.
-// Implement delete
-
 async function fetchNewPhoto() {
 
   const response = await fetch('http://localhost:3000/api/photos');
   const object = await response.json();
 
   let newPhoto = object.data[object.data.length - 1];
-
+  
+      let id = newPhoto.id
       let image = newPhoto.attributes.photo_image_url;
       let location = newPhoto.attributes.location.city;
       let caption = newPhoto.attributes.caption;
-      let pic = new Photo(image, location, caption);
+      
+      let pic = new Photo(id, image, location, caption);
   
-      debugger
       renderPhoto(pic);
+}
+
+function deletePhoto(pic) {
+  fetch(`http://localhost:3000/api/photos/${pic.id}`, {
+    method: 'DELETE'
+  })
+  .then(location.reload())
+  .then(fetchAllPhotos())
 }
 
 async function fetchAllPhotos() {
@@ -64,33 +59,46 @@ async function fetchAllPhotos() {
   const object = await response.json();
 
   let allPhotos = object.data;
-
+  
   allPhotos.forEach(photo => {
+    
+    let id = photo.id
     let image = photo.attributes.photo_image_url;
     let location = photo.attributes.location.city;
     let caption = photo.attributes.caption;
 
-    let pic = new Photo(image, location, caption)
+    let pic = new Photo(id, image, location, caption);
 
     renderPhoto(pic);
   })
 }
 
 function renderPhoto(pic) {
-  const main = document.querySelector('#main-content')
+  const main = document.querySelector('#main-content');
   
   const img = document.createElement('img');
-  img.src = `${pic.image}`
+  img.src = `${pic.image}`;
   
-  const pLocation = document.createElement('p')
-  pLocation.innerHTML = `${pic.location}`
+  const pLocation = document.createElement('p');
+  pLocation.innerHTML = `${pic.location}`;
 
-  const pCaption = document.createElement('p')
-  pCaption.innerHTML = `${pic.caption}`
-    
-  main.appendChild(img)
-  main.appendChild(pLocation)
-  main.appendChild(pCaption)
+  const pCaption = document.createElement('p');
+  pCaption.innerHTML = `${pic.caption}`;
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.innerHTML = `Delete`
+  deleteBtn.onclick = () => {deletePhoto(pic)}
+  deleteBtn.setAttribute("class", "delete")
+  deleteBtn.setAttribute("id", `${pic.id}`)
+
+  main.appendChild(img);
+  main.appendChild(pLocation);
+  main.appendChild(pCaption);
+  main.appendChild(deleteBtn)
+}
+
+async function goodBye(pic) {
+  console.log(`The delete button of ${pic.id} was clicked and was successfully deleted. Good Bye!`)
 }
 
 document.addEventListener('DOMContentLoaded', () => {

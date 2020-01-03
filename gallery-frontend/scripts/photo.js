@@ -1,5 +1,6 @@
   class Photo {
-    constructor(image, location, caption) {
+    constructor(id, image, location, caption) {
+      this.id = id
       this.image = image;
       this.location = location;
       this.caption = caption;
