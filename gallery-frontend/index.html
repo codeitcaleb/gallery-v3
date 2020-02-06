@@ -31,6 +31,13 @@
       <input type="submit" name="submit" id="submit">
     </form>
 
+    <p>Filter By Location:
+      <select onchange="selectOption(event)" id="location-select">
+        <option value="select-location" disabled>-- Select Location --</option>
+        <option value="all-photos">All</option>
+      </select>
+    <p>
+  
     <main id="main-content">
       <!-- main page content -->
     </main>
@@ -64,6 +71,11 @@
     </div> -->
 
   </body>
-  <script src="scripts/index.js"></script>
-  <script src="scripts/photo.js"></script>
+  
+  <script src="./src/adapters/PhotosAdapter.js"></script>
+  <script src="./src/photo.js"></script>
+  <script src="./src/photos.js"></script>
+  <script src="./src/app.js"></script>
+  <script src="./src/index.js"></script>
+  <!-- <script src="src/components/"></script> -->
 </html>
