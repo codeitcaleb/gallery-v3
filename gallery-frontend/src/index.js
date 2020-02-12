@@ -25,14 +25,13 @@ document.querySelector("#photo-form").addEventListener("submit", event => {
 function createPhoto(configObject) {
 
   fetch(`${baseUrl}/api/photos`, configObject)
-    
- .then(response => response.json())
- .then(object => addNewPhoto(object))
- .catch(error => (document.body.innerHTML = error.message));
+  .then(response => response.json())
+  .then(object => addNewPhoto(object))
+  .catch(error => (document.body.innerHTML = error.message));
 }
 
 function addNewPhoto(object) {
-  let main = document.querySelector('#main-content')
+  let main = document.querySelector('#main-content');
   let photo = object.data;
 
   let id = photo.id;
