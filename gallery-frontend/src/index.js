@@ -25,19 +25,32 @@ document.querySelector("#photo-form").addEventListener("submit", event => {
 function createPhoto(configObject) {
 
   fetch(`${baseUrl}/api/photos`, configObject)
-    .then(response => response.json())
-    .then(window.location.reload())
-    .then(fetchAllPhotos())
-    .catch(error => (document.body.innerHTML = error.message));
+    
+ .then(response => response.json())
+ .then(object => addNewPhoto(object))
+ .catch(error => (document.body.innerHTML = error.message));
 }
 
-function deletePhoto(pic) {
-  debugger
-  fetch(`${baseUrl}/api/photos/${pic.id}`, {
+function addNewPhoto(object) {
+  let main = document.querySelector('#main-content')
+  let photo = object.data;
+
+  let id = photo.id;
+  let image = photo.attributes.photo_image_url;
+  let location = photo.attributes.location.city;
+  let caption = photo.attributes.caption;
+
+  let pic = new Photo(id, image, location, caption);
+
+  main.innerHTML += pic.renderPhoto()
+}
+
+function deletePhoto(id) {
+  
+  fetch(`${baseUrl}/api/photos/${id}`, {
     method: 'DELETE'
   })
-  .then(location.reload())
-  .then(fetchAllPhotos())
+  .then(() => fetchAllPhotos())
 }
 
 async function fetchAllPhotos() {
